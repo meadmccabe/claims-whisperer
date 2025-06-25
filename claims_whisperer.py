@@ -8,12 +8,15 @@ visit_summary = st.text_area("Describe the patient visit", placeholder="e.g., Fo
 
 if st.button("Generate Claim Info"):
     with st.spinner("Thinking..."):
-        response = openai.ChatCompletion.create(
-            model="gpt-4-turbo",
-            messages=[
-                {"role": "system", "content": "You are a certified medical coder. Given a patient visit summary, return appropriate CPT and ICD-10 codes with brief justification."},
-                {"role": "user", "content": visit_summary}
+        response = openai.chat.completions.create(
+    model="gpt-4-turbo",
+    messages=[
+        {"role": "system", "content": "You are a certified medical coder. Given a patient visit summary, return appropriate CPT and ICD-10 codes with brief justification."},
+        {"role": "user", "content": visit_summary}
+    ]
+)
             ]
         )
         st.markdown("### ✅ Suggested Codes")
-        st.write(response["choices"][0]["message"]["content"])
+     st.write(response.choices[0].message.content)
+)
